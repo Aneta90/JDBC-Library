@@ -1,13 +1,21 @@
 package connection;
+import model.BookCopy;
+import model.Customer;
+import model.RentStatus;
+import service.OperationsOnBookCopy;
+import service.OperationsOnBookInfo;
+import service.OperationsOnCustomer;
 import service.OperationsOnRents;
-import service.Procedures;
 
+import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.LinkedList;
-import java.util.List;
+import java.time.LocalDate;
+
 
 public class Main {
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) {
+
     }
 }

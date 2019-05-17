@@ -1,6 +1,5 @@
 package service;
 
-import com.mysql.cj.protocol.Resultset;
 import connection.ConnectionToDatabase;
 import model.Customer;
 
@@ -14,29 +13,59 @@ import java.util.Scanner;
 
 public class OperationsOnCustomer {
 
-    public static String getFirstNameOfClient() {
+    public static void getClientById() {
+
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Type first name of the Client:");
-        return scanner.nextLine();
+        System.out.println("Type id of the customer you are interested in: ");
+        int id = scanner.nextInt();
+        String parametrizedQuery = "SELECT * FROM customers WHERE customerId = ?";
+        try (PreparedStatement preparedStatement = ConnectionToDatabase.getConnection().prepareStatement(parametrizedQuery)) {
+            preparedStatement.setInt(1, id);
+
+            try (ResultSet resultset = preparedStatement.executeQuery()) {
+                while (resultset.next()) {
+                    int customerId = resultset.getInt("customerId");
+                    String lastName = resultset.getString("lastName");
+                    String firstName = resultset.getString("firstName");
+                    String email = resultset.getString("email");
+                    String phone = resultset.getString("phone");
+                    System.out.println("The customer you are interested in:" + customerId + " " + lastName + " " + firstName + "" + email + " " + phone);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
     }
 
-    public static String getLastNameOfClient() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Type last name of the Client:");
-        return scanner.nextLine();
-    }
+    public static void getClientByLastName(){
 
-    public static String getEmailfClient() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Type email of the Client:");
-        return scanner.nextLine();
-    }
+        System.out.println("Type lastName of the customer you are interested in: ");
+        String surname = scanner.nextLine();
+        String parametrizedQuery = "SELECT * FROM customers WHERE lastName = ?";
+        try (PreparedStatement preparedStatement = ConnectionToDatabase.getConnection().prepareStatement(parametrizedQuery)) {
+            preparedStatement.setString(1, surname);
 
-    public static String getPhonefClient() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Type phone of the Client:");
-        return scanner.nextLine();
+            try (ResultSet resultset = preparedStatement.executeQuery()) {
+                while (resultset.next()) {
+                    int customerId = resultset.getInt("customerId");
+                    String lastName = resultset.getString("lastName");
+                    String firstName = resultset.getString("firstName");
+                    String email = resultset.getString("email");
+                    String phone = resultset.getString("phone");
+                    System.out.println("The customer you are interested in:" + customerId + " " + lastName + " " + firstName + " " + email + " " + phone);
+                }
+
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+
     }
 
     public static boolean insertNewCustomer(final String lastName, final String firstName,
@@ -53,6 +82,7 @@ public class OperationsOnCustomer {
         } catch (SQLException s) {
             System.out.println(s);
         }
+        System.out.println("Customer is added!");
         return isCustomerAdded;
     }
 
@@ -135,14 +165,14 @@ public class OperationsOnCustomer {
         System.out.println("Type phone");
         String updatedPhone = scanner4.nextLine();
 
-        String parametrizedQuery = "UPDATE Customers SET customerId = ?, lastName = ?, firstName = ?, email= ?, phone = ?";
+        String parametrizedQuery = "UPDATE Customers SET lastName = ?, firstName = ?, email= ?, phone = ? WHERE customerId = ?";
         try(PreparedStatement preparedStatement = ConnectionToDatabase.getConnection().prepareStatement(parametrizedQuery)) {
 
-            preparedStatement.setInt(1, idToUpdate);
-            preparedStatement.setString(2, updatedLastName);
-            preparedStatement.setString(3, updatedFirstName);
-            preparedStatement.setString(4, updatedEmail);
-            preparedStatement.setString(5, updatedPhone);
+            preparedStatement.setString(1, updatedLastName);
+            preparedStatement.setString(2, updatedFirstName);
+            preparedStatement.setString(3, updatedEmail);
+            preparedStatement.setString(4, updatedPhone);
+            preparedStatement.setInt(5,idToUpdate);
 
             isUpdated = preparedStatement.executeUpdate()==1;
 

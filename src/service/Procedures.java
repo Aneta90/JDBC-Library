@@ -1,12 +1,6 @@
 package service;
 
-import com.sun.corba.se.impl.encoding.TypeCodeInputStream;
-import com.sun.deploy.security.ValidationState;
-import jdk.nashorn.internal.codegen.types.Type;
-
 import java.sql.*;
-import java.time.Duration;
-import java.time.LocalDate;
 
 public class Procedures {
 

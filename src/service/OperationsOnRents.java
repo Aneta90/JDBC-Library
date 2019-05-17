@@ -15,41 +15,6 @@ import java.util.Scanner;
 
 public class OperationsOnRents {
 
-    public static String getRentedDate() throws ParseException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Type rentedDate in format dd-mm-yyyy: ");
-        String date = scanner.nextLine();
-        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
-        return String.valueOf(format.parse(date));
-    }
-
-    public static String getReturnedDate() throws ParseException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Type returnedDate in format dd-mm-yyyy: ");
-        String date = scanner.nextLine();
-        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
-        return String.valueOf(format.parse(date));
-    }
-
-    public static int getCustomerRentingBook() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Type customerId: ");
-        return scanner.nextInt();
-    }
-
-    public static String getStatus() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Type status of the book: IN_RENT or RETURNED");
-        return scanner.nextLine();
-    }
-
-    public static int getBookCopyId() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Type id of the bookCopy: ");
-        return scanner.nextInt();
-    }
-
-    ///TOTAL PRICE ADDITIONAL METHOD!!!!!
     public static boolean insertNewRent(final String rentedDate, final String returnDate, final int rentedTo, final int rentCopyId, final String status, final BigDecimal totalPrice) {
 
         boolean isRentAdded = false;
@@ -109,7 +74,7 @@ public class OperationsOnRents {
             return isRentDeleted;
         }
 
-    public static boolean updateRent(){ /// ON DELETE CASCADE ON UPDATE CASCADE ???? // CHANGE STATUS
+    public static boolean updateRent(){
 
         boolean isUpdated=false;
 
@@ -129,7 +94,7 @@ public class OperationsOnRents {
         System.out.println("Type copyId of the book rented:");
         int copyId = scanner4.nextInt();
         Scanner scanner5 = new Scanner(System.in);
-        System.out.println("Type status : IN_RENT or RETURNED "); ////???ENUM !!!
+        System.out.println("Type status : IN_RENT or RETURNED ");
         String status = scanner5.nextLine();
 
         String parametrizedQuery = "UPDATE Rents SET rentedDate = ?, returnDate = ?, rentedTo = ?, rentCopyId= ?, status = ? WHERE rentsId= " + idToUpdate;

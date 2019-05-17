@@ -40,4 +40,24 @@ public class BookInfo {
     public void setBookDescription(String bookDescription) {
         this.bookDescription = bookDescription;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BookInfo bookInfo = (BookInfo) o;
+
+        if (bookInfoId != bookInfo.bookInfoId) return false;
+        if (title != null ? !title.equals(bookInfo.title) : bookInfo.title != null) return false;
+        return bookDescription != null ? bookDescription.equals(bookInfo.bookDescription) : bookInfo.bookDescription == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = bookInfoId;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (bookDescription != null ? bookDescription.hashCode() : 0);
+        return result;
+    }
 }

@@ -1,7 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
-
 public class BookCopy {
 
     private int bookCopyId;
